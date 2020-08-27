@@ -1,0 +1,32 @@
+image:
+  tag: 1.4.1
+
+persistence:
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
+peer:
+  databaseType: CouchDB
+  couchdbInstance: cdb-h1-peer1
+  mspID: Hospital1MSP
+
+secrets:
+  peer:
+    cert: hlf--h1-peer1-idcert
+    key: hlf--h1-peer1-idkey
+    caCert: hlf--h1admin-cacert
+  ordTlsRootCert: hlf--tls-client-orderer-certs
+  channels:
+    - hlf--healthchannel
+  adminCert: hlf--h1admin-idcert
+  adminKey: hlf--h1admin-idkey
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 95
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchLabels:
+              app: hlf-peer

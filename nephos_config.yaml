@@ -1,0 +1,80 @@
+core:
+  # Comment out to make it work on your cluster
+  cluster: minikube
+  # ChartMuseum repository or directory holding charts
+  chart_repo: stable
+  # Directory where we hold configtx.yaml
+  dir_config: ./examples/qa-tls/config
+  # Directory where we hold:
+  # 1) cryptographic material
+  # 2) genesis block and
+  # 3) channel transaction
+  dir_crypto: ./examples/qa-tls/crypto
+  # Directory where the Helm Chart values reside
+  dir_values: ./examples/qa-tls/helm_values
+cas:
+  ca:
+    namespace: cas
+    # If testing locally on Minikube, we use our own self-signed certificate's PEM
+    tls_cert: ./examples/ca-nephos-local.pem
+    # Alternatively, if testing on a cluster with proper DNS and cert-manager...
+    # tls_cert: ./nephos/extras/Lets_Encrypt_Authority_X3.pem
+  ca-tls:
+    namespace: cas-tls
+    tls_cert: ./examples/ca-tls-nephos-local.pem
+ordering:
+  secret_genesis: hlf--genesis
+  tls:
+    enable: true
+    tls_ca: ca-tls
+msps:
+  HealthMinistryMSP: 
+    ca: ca
+    name: HealthMinistryMSP
+    namespace: hmin
+    org_admin: hminadmin
+    # org_passwd:  # Set implicitly
+    orderers:
+      domain: hmin.svc.cluster.local
+      nodes:
+        ord1: {}
+  Hospital1MSP:
+    ca: ca
+    name: Hospital1MSP
+    namespace: h1
+    org_admin: h1admin
+    # org_passwd:  # Set implicitly
+    orderers: {}
+    peers:
+      domain: h1.svc.cluster.local
+      nodes:
+        h1-peer1: {}
+   Hospital2MSP:
+    ca: ca
+    name: Hospital2MSP
+    namespace: h2
+    org_admin: h2admin
+    # org_passwd:  # Set implicitly
+    orderers: {}
+    peers:
+      domain: h2.svc.cluster.local
+      nodes:
+        h2-peer1: {} 
+channels:
+  healthchannel:
+    msps:
+      - Hospital1MSP
+      - Hospital2MSP
+    channel_name: healthchannel
+    channel_profile: "HealthChannel"
+    secret_channel: hlf--healthchannel
+# You can specify a particular version of a chart for each chart used, or use the latest by default
+versions:
+  postgresql:
+  hlf-ca:
+  kafka:
+  hlf-ord:
+  hlf-couchdb:
+  hlf-peer:
+  hl-composer:
+
