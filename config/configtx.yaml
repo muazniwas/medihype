@@ -12,12 +12,9 @@
 #
 ################################################################################
 Organizations:
-
-    # SampleOrg defines an MSP using the sampleconfig.  It should never be used
-    # in production but may be used as a template for other definitions
     - &HealthMinistryOrg
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
+        # HealthMinistryOrg defines the organization which is used as the sample
+        # government institution in the medihype system
         Name: HealthMinistryOrg
 
         # ID to load the MSP definition as
@@ -138,7 +135,7 @@ Profiles:
                 Organizations:
                     - *Hospital1Org
                     - *Hospital2Org
-    FooChannel:
+    HealthChannel:
         Consortium: MyConsortium
         Application:
             <<: *ApplicationDefaults

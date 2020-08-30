@@ -4,24 +4,24 @@ core:
   # ChartMuseum repository or directory holding charts
   chart_repo: stable
   # Directory where we hold configtx.yaml
-  dir_config: ./examples/qa-tls/config
+  dir_config: ./config
   # Directory where we hold:
   # 1) cryptographic material
   # 2) genesis block and
   # 3) channel transaction
-  dir_crypto: ./examples/qa-tls/crypto
+  dir_crypto: ./crypto
   # Directory where the Helm Chart values reside
-  dir_values: ./examples/qa-tls/helm_values
+  dir_values: ./helm_values
 cas:
   ca:
     namespace: cas
     # If testing locally on Minikube, we use our own self-signed certificate's PEM
-    tls_cert: ./examples/ca-nephos-local.pem
+    tls_cert: ./ca-nephos-local.pem
     # Alternatively, if testing on a cluster with proper DNS and cert-manager...
     # tls_cert: ./nephos/extras/Lets_Encrypt_Authority_X3.pem
   ca-tls:
     namespace: cas-tls
-    tls_cert: ./examples/ca-tls-nephos-local.pem
+    tls_cert: ./ca-tls-nephos-local.pem
 ordering:
   secret_genesis: hlf--genesis
   tls:
@@ -63,18 +63,10 @@ msps:
 channels:
   healthchannel:
     msps:
+      - HealthMinistryMSP
       - Hospital1MSP
       - Hospital2MSP
     channel_name: healthchannel
     channel_profile: "HealthChannel"
     secret_channel: hlf--healthchannel
-# You can specify a particular version of a chart for each chart used, or use the latest by default
-versions:
-  postgresql:
-  hlf-ca:
-  kafka:
-  hlf-ord:
-  hlf-couchdb:
-  hlf-peer:
-  hl-composer:
 
